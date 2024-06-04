@@ -59,3 +59,8 @@ void Cheats::Visuals::drawBox(ImVec2* headPos, ImVec2* feetPos, ImVec4* color) {
 
 	ImGui::GetBackgroundDrawList()->AddRect(startBoxPos, endBoxPos, IM_COL32(color->x, color->y, color->z, color->w), 0.0f, NULL, 1.5f);
 }
+
+void Cheats::Visuals::drawFovCircle() {
+	ImVec2 center{ (float)Imgui_Framework::window_width / 2, (float)Imgui_Framework::window_height / 2 + 12 /* magic number*/};
+	ImGui::GetBackgroundDrawList()->AddCircle(center, CheatOptions::Aimbot_FOV, IM_COL32(255, 255, 255, 255), 0, 0.001f);
+}

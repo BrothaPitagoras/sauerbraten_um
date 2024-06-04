@@ -19,6 +19,10 @@ void Cheats::run() {
 			
 			Cheats::Aimbot::Aimbot(localPlayer);
 		}
+		if (CheatOptions::Aimbot_FOV_Enable)
+		{
+			Cheats::Visuals::drawFovCircle();
+		}
 	}
 
 

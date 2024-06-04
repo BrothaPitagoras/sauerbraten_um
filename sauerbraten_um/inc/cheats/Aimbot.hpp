@@ -5,11 +5,10 @@
 #include "processManagement.hpp"
 #include "imgui_framework.hpp"
 #include "offsets/CheatOptions.hpp"
+#include "structs/EntityList.hpp"
 
 namespace Cheats::Aimbot {
 
-	void Aimbot(Player* localPlayer);
-
-	Player* getClosestTargetToCrosshair(Player* localPlayer, Matrix* viewMatrix, uintptr_t& entityList, int playerCount);
+	void Aimbot(Player* localPlayer, ProcessManagement* proc);
 
 }

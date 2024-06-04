@@ -11,5 +11,5 @@
 namespace Cheats {
 
 
-	void run();
+	void run(ProcessManagement* proc);
 }

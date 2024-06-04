@@ -1,12 +1,17 @@
 #pragma once
 #include "includes.h"
 #include "structs/Matrix.hpp"
+	
+// changes:
+//	Virtualprotect shouldnt be needed when calling WriteProcessMemory - humbter
+//	dont need to use windows typedef since they are for retro compatibility. - humbter
 
-namespace ProcessManagement {
+class ProcessManagement {
+public:
 
-	inline HANDLE handleProcess;
+	HANDLE handleProcess;
 
-	inline uintptr_t moduleBaseAddress;
+	uintptr_t moduleBaseAddress;
 
 	DWORD GetProcessId(const wchar_t* procName);
 
@@ -14,35 +19,22 @@ namespace ProcessManagement {
 
 	template <typename T> bool WriteMemory(uintptr_t addr, const T& data) {
 
-		// Create a byte buffer with the data
-		byte* buffer = new byte[sizeof(T)];
-
-		memcpy(buffer, &data, sizeof(T));
-
-		// Get permissions to write in Page Numbers containing the bytes of addr + sizeof(T)
-		DWORD oldPermissions;
-		VirtualProtectEx(ProcessManagement::handleProcess, reinterpret_cast<LPVOID>(addr), sizeof(T), PAGE_READWRITE, &oldPermissions);
-
 		// I dont need bytes written rn, maybe some other time, get Write result
-		SIZE_T bytes_written = NULL;
-		bool result = WriteProcessMemory(ProcessManagement::handleProcess, reinterpret_cast<LPVOID>(addr), buffer, sizeof(T), &bytes_written);
-
-		// Cleanup, delete buffer and restore old permissions
-		delete[] buffer;
-		VirtualProtectEx(ProcessManagement::handleProcess, reinterpret_cast<LPVOID>(addr), sizeof(T), oldPermissions, NULL);
+		uint64_t bytes_written = 0;
+		bool result = WriteProcessMemory(ProcessManagement::handleProcess, reinterpret_cast<void*>(addr), &data, sizeof(T), &bytes_written);
 
 		return result;
 	}
 
 	template <typename T> T ReadMemory(uintptr_t address) {
 		T value;
-		SIZE_T* bytesRead = NULL;
+		uint64_t bytesRead = 0;
 
-		ReadProcessMemory(ProcessManagement::handleProcess, reinterpret_cast<LPCVOID>(address), &value, sizeof(T), bytesRead);
+		ReadProcessMemory(ProcessManagement::handleProcess, reinterpret_cast<void*>(address), &value, sizeof(T), &bytesRead);
 		return value;
 	}
 
 	Matrix* ReadMatrix(uintptr_t address);
 
 	bool AttachAndFillModuleBaseAddress(const wchar_t* procName);
-}
+};

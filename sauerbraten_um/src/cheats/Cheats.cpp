@@ -1,11 +1,13 @@
 #include "cheats/Cheats.hpp"
 
-void Cheats::run() {
-	Player* localPlayer = new Player(ProcessManagement::ReadMemory<uintptr_t>(ProcessManagement::moduleBaseAddress + Offsets::o_local_player));
+void Cheats::run(ProcessManagement* proc) {
+
+
+	Player* localPlayer = new Player(proc->ReadMemory<uintptr_t>(proc->moduleBaseAddress + Offsets::o_local_player), proc);
 
 	if (CheatOptions::ESP)
 	{
-		Cheats::Visuals::ESP(localPlayer);
+		Cheats::Visuals::ESP(localPlayer, proc);
 	}
 
 	if (GetAsyncKeyState(VK_LCONTROL)) {
@@ -17,7 +19,7 @@ void Cheats::run() {
 	{
 		if (GetAsyncKeyState(VK_LMENU)) {
 			
-			Cheats::Aimbot::Aimbot(localPlayer);
+			Cheats::Aimbot::Aimbot(localPlayer, proc);
 		}
 		if (CheatOptions::Aimbot_FOV_Enable)
 		{

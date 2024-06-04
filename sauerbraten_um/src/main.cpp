@@ -20,7 +20,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT nCmdShow)
 {
     Imgui_Framework::initialize(hInstance);
 
-    if (!ProcessManagement::AttachAndFillModuleBaseAddress(L"sauerbraten.exe")) {
+    auto procMainExe = new ProcessManagement();
+
+    if (!procMainExe->AttachAndFillModuleBaseAddress(L"sauerbraten.exe")) {
         return 0;
     }
 
@@ -34,7 +36,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT nCmdShow)
 
         MainGui::renderGui();
 
-        Cheats::run();
+        Cheats::run(procMainExe);
 
         Imgui_Framework::render();
     }

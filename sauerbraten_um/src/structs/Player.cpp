@@ -1,28 +1,23 @@
 #include "structs/player.hpp"
 
-Player::Player(uintptr_t pointerPlayer) {
+Player::Player(uintptr_t pointerPlayer, ProcessManagement* proc) {
 	this->pointerPlayer = pointerPlayer;
-	this->playerPadded = getPlayerPadded(pointerPlayer);
-	this->feetpos = this->playerPadded.pos - Vector3(0.0f, 0.0f, 16.0f);
+	this->paddedPlayer = proc->ReadMemory<PaddedPlayer>(pointerPlayer);
 }
 
-Offsets::PlayerPadded Player::getCachedPlayer() {
-	return this->playerPadded;
-};
-
-Offsets::PlayerPadded Player::getPlayerPadded(uintptr_t addr) {
-	return ProcessManagement::ReadMemory<Offsets::PlayerPadded>(addr);
-};
-
-void Player::refreshPlayerPadded() {
-	this->playerPadded = getPlayerPadded(pointerPlayer);
-	this->feetpos = this->playerPadded.pos - Vector3(0.0f, 0.0f, 16.0f);
-};
-
-bool Player::setView(Vector3& viewVector) {
-	return ProcessManagement::WriteMemory<Vector3>(pointerPlayer + Offsets::player_view_offset, viewVector);
+bool Player::setView(Vector3& viewVector, ProcessManagement* proc) {
+	return proc->WriteMemory<Vector3>(pointerPlayer + Offsets::player_view_offset, viewVector);
 }
 
-bool Player::setHealth(int health) {
-	return ProcessManagement::WriteMemory<int>(pointerPlayer + Offsets::player_health_offset, health);
+bool Player::setHealth(int health, ProcessManagement* proc) {
+	return proc->WriteMemory<int>(pointerPlayer + Offsets::player_health_offset, health);
 }
+
+PaddedPlayer Player::getCachedPlayer() {
+	return this->paddedPlayer;
+}
+
+Vector3 Player::getFeetPos() {
+	return this->paddedPlayer.pos - Vector3(0.0f, 0.0f, 16.0f);
+}
+

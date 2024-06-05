@@ -27,7 +27,7 @@ DWORD ProcessManagement::GetProcessId(const wchar_t* procName) {
 	return procId;
 }
 
-const uintptr_t ProcessManagement::GetModuleBaseAddress(DWORD dwProcID, const wchar_t* szModuleName)
+uintptr_t ProcessManagement::GetModuleBaseAddress(DWORD dwProcID, const wchar_t* szModuleName)
 {
 	uintptr_t dwModuleBaseAddress = 0;
 	HANDLE hndlSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, dwProcID);

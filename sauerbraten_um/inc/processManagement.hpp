@@ -13,9 +13,9 @@ public:
 
 	uintptr_t moduleBaseAddress;
 
-	DWORD GetProcessId(const wchar_t* procName);
+	static DWORD GetProcessId(const wchar_t* procName);
 
-	const uintptr_t GetModuleBaseAddress(DWORD procId, const wchar_t* procName);
+	static uintptr_t GetModuleBaseAddress(DWORD procId, const wchar_t* procName);
 
 	template <typename T> bool WriteMemory(uintptr_t addr, const T& data) {
 

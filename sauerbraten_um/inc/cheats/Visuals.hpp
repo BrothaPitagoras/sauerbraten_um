@@ -11,7 +11,7 @@ namespace Cheats::Visuals {
 
 	void ESP(Player* localPlayer, ProcessManagement* proc);
 
-	void drawBox(ImVec2* headPos, ImVec2* feetPos, ImVec4* color);
+	void drawBox(const ImVec2* headPos, const ImVec2* feetPos, const ImVec4* color);
 
 	void drawFovCircle();
 }

@@ -16,8 +16,5 @@ public:
     Vector3 operator+(const Vector3& other) const;
 
     std::string toString();
-    
-    friend std::ostream& operator<<(std::ostream& Str, Vector3 const& v);
-
 };
 

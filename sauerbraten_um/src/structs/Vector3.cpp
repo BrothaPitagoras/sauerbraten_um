@@ -13,14 +13,9 @@ Vector3 Vector3::operator-(const Vector3& other) const {
 }
 
 std::string Vector3::toString(){
-	return std::to_string(this->x) + ", " + std::to_string(this->y) + ", " + std::to_string(this->z);
+	return std::format("{}, {}, {}", this->x, this->y, this->z);
 }
 
 Vector3 Vector3::operator+(const Vector3& other) const {
 	return { x + other.x, y + other.y, z + other.z };
-}
-
-std::ostream& operator<<(std::ostream& Str, Vector3 const& v) {
-	Str << "(" << v.x << ", " << v.y << ", " << v.z << ")";
-	return Str;
 }

@@ -6,15 +6,12 @@
 #include "imgui_framework.hpp"
 #include "offsets/CheatOptions.hpp"
 
-// 
 class EntityList
 {
 public:
-	std::vector<Player> playerList;
+	std::vector<Player> playerList = std::vector<Player>();
 
 	EntityList(uintptr_t entityListAddr, int size, ProcessManagement* proc);
-
-	~EntityList();
 
 	Player* getClosestTargetToCrosshair(Player* localPlayer, Matrix* viewMatrix);
 

@@ -15,26 +15,24 @@ public:
 
 	DWORD GetProcessId(const wchar_t* procName);
 
-	uintptr_t GetModuleBaseAddress(DWORD procId, const wchar_t* procName);
+	const uintptr_t GetModuleBaseAddress(DWORD procId, const wchar_t* procName);
 
 	template <typename T> bool WriteMemory(uintptr_t addr, const T& data) {
 
 		// I dont need bytes written rn, maybe some other time, get Write result
 		uint64_t bytes_written = 0;
-		bool result = WriteProcessMemory(ProcessManagement::handleProcess, reinterpret_cast<void*>(addr), &data, sizeof(T), &bytes_written);
+		bool result = WriteProcessMemory(handleProcess, reinterpret_cast<void*>(addr), &data, sizeof(T), &bytes_written);
 
 		return result;
-	}
+	};
 
 	template <typename T> T ReadMemory(uintptr_t address) {
 		T value;
 		uint64_t bytesRead = 0;
 
-		ReadProcessMemory(ProcessManagement::handleProcess, reinterpret_cast<void*>(address), &value, sizeof(T), &bytesRead);
+		ReadProcessMemory(handleProcess, reinterpret_cast<void*>(address), &value, sizeof(T), &bytesRead);
 		return value;
-	}
-
-	Matrix* ReadMatrix(uintptr_t address);
+	};
 
 	bool AttachAndFillModuleBaseAddress(const wchar_t* procName);
 };

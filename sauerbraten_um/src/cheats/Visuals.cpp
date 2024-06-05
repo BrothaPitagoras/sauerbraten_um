@@ -2,14 +2,14 @@
 
 void Cheats::Visuals::ESP(Player* player, ProcessManagement* proc) {
 	int playerCount = proc->ReadMemory<int>(proc->moduleBaseAddress + Offsets::o_player_count);
-	Matrix* viewMatrix = proc->ReadMatrix(proc->moduleBaseAddress + Offsets::o_view_matrix);
+	Matrix viewMatrix = proc->ReadMemory<Matrix>(proc->moduleBaseAddress + Offsets::o_view_matrix);
 	
 	uintptr_t entityListaddr = proc->ReadMemory<uintptr_t>(proc->moduleBaseAddress + Offsets::o_entity_list);
 
-	auto entityList = new EntityList(entityListaddr, playerCount, proc);
-	ImVec4* color;
+	auto entityList = EntityList(entityListaddr, playerCount, proc);
+	ImVec4 color;
 
-	for (auto otherPlayer = entityList->playerList.begin(); otherPlayer != entityList->playerList.end(); ++otherPlayer)
+	for (auto otherPlayer = entityList.playerList.begin(); otherPlayer != entityList.playerList.end(); ++otherPlayer)
 	{
 		Vector2 headScreenPos{};
 		Vector2 footScreenPos{};
@@ -22,29 +22,29 @@ void Cheats::Visuals::ESP(Player* player, ProcessManagement* proc) {
 
 		if (enemy)
 		{
-			color = new ImVec4(255.0f, 0.0f, 0.0f, 255.0f);
+			color = ImVec4(255.0f, 0.0f, 0.0f, 255.0f);
 		}
 		else {
-			color = new ImVec4(0.0f, 255.0f, 0.0f, 255.0f);
+			color = ImVec4(0.0f, 255.0f, 0.0f, 255.0f);
 		}
 
 		// if any w2s false then continue
-		if (!viewMatrix->WorldToScreen(otherPlayer->getCachedPlayer().pos, Imgui_Framework::window_width, Imgui_Framework::window_height, headScreenPos)
-			|| !viewMatrix->WorldToScreen(otherPlayer->getFeetPos(), Imgui_Framework::window_width, Imgui_Framework::window_height, footScreenPos)) {
+		if (!viewMatrix.WorldToScreen(otherPlayer->getCachedPlayer().pos, Imgui_Framework::window_width, Imgui_Framework::window_height, headScreenPos)
+			|| !viewMatrix.WorldToScreen(otherPlayer->getFeetPos(), Imgui_Framework::window_width, Imgui_Framework::window_height, footScreenPos)) {
 			continue;
 		}
 
-		ImVec2* guiHeadPos = new ImVec2(headScreenPos.x, headScreenPos.y);
-		ImVec2* guiFootPos = new ImVec2(footScreenPos.x, footScreenPos.y);
+		auto guiHeadPos = ImVec2(headScreenPos.x, headScreenPos.y);
+		auto guiFootPos = ImVec2(footScreenPos.x, footScreenPos.y);
 
-		drawBox(guiHeadPos, guiFootPos, color);
+		drawBox(&guiHeadPos, &guiFootPos, &color);
 	}
 
 }
 
 
 
-void Cheats::Visuals::drawBox(ImVec2* headPos, ImVec2* feetPos, ImVec4* color) {
+void Cheats::Visuals::drawBox(const ImVec2* headPos, const ImVec2* feetPos, const ImVec4* color) {
 
 	float boxHeight = headPos->y - feetPos->y;
 	float boxWidth = boxHeight / 2.6f;

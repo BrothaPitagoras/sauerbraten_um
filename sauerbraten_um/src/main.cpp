@@ -20,14 +20,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT nCmdShow)
 {
     Imgui_Framework::initialize(hInstance);
 
-    auto procMainExe = new ProcessManagement();
+    auto procMainExe = ProcessManagement();
 
-    if (!procMainExe->AttachAndFillModuleBaseAddress(L"sauerbraten.exe")) {
+    if (!procMainExe.AttachAndFillModuleBaseAddress(L"sauerbraten.exe")) {
         return 0;
     }
-
-
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // Main loop
     while (Imgui_Framework::running)
@@ -36,7 +33,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT nCmdShow)
 
         MainGui::renderGui();
 
-        Cheats::run(procMainExe);
+        Cheats::run(&procMainExe);
 
         Imgui_Framework::render();
     }

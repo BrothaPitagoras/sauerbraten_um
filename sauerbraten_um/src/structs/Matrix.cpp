@@ -9,8 +9,8 @@ bool Matrix::WorldToScreen(Vector3 worldPos, int width, int height, Vector2& scr
     float screenW = (m14 * worldPos.x) + (m24 * worldPos.y) + (m34 * worldPos.z) + m44;
 
     //camera position (eye level/middle of screen)
-    float camX = width / 2.0f;
-    float camY = height / 2.0f;
+    float camX = static_cast<float>(width)/ 2.0f;
+    float camY = static_cast<float>(height) / 2.0f;
 
     //convert to homogeneous position
     float x = camX + (camX * screenX / screenW);

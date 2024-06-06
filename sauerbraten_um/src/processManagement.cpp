@@ -41,7 +41,7 @@ uintptr_t ProcessManagement::GetModuleBaseAddress(DWORD dwProcID, const wchar_t*
 			{
 				if (_wcsicmp(ModuleEntry32.szModule, szModuleName) == 0)
 				{
-					dwModuleBaseAddress = (uintptr_t)ModuleEntry32.modBaseAddr;
+					dwModuleBaseAddress = reinterpret_cast<uintptr_t>(ModuleEntry32.modBaseAddr);
 					break;
 				}
 			} while (Module32Next(hndlSnapshot, &ModuleEntry32));

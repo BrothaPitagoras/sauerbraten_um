@@ -9,7 +9,7 @@
 class EntityList
 {
 public:
-	std::vector<Player> playerList = std::vector<Player>();
+	std::vector<Player> playerList{};
 
 	EntityList(uintptr_t entityListAddr, int size, ProcessManagement* proc);
 

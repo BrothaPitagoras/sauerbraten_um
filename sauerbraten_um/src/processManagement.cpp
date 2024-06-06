@@ -14,7 +14,7 @@ DWORD ProcessManagement::GetProcessId(const wchar_t* procName) {
 		{
 			do {
 				//verify if the process name is equal to given process name
-				if (_wcsicmp(pe32.szExeFile, procName) == 0) {
+				if (std::wstring_view(pe32.szExeFile).compare(procName) == 0) {
 					procId = pe32.th32ProcessID;
 					break;
 				}
@@ -39,7 +39,7 @@ uintptr_t ProcessManagement::GetModuleBaseAddress(DWORD dwProcID, const wchar_t*
 		{
 			do
 			{
-				if (_wcsicmp(ModuleEntry32.szModule, szModuleName) == 0)
+				if (std::wstring_view(ModuleEntry32.szModule).compare(szModuleName) == 0)
 				{
 					dwModuleBaseAddress = reinterpret_cast<uintptr_t>(ModuleEntry32.modBaseAddr);
 					break;

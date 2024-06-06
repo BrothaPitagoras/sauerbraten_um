@@ -14,7 +14,7 @@ void Cheats::Aimbot::Aimbot(Player* localPlayer, ProcessManagement* proc) {
 		return;
 	}
 
-	auto resultText = std::string_view(target->getCachedPlayer().name);
+	std::string_view resultText = target->getCachedPlayer().name;
 
 	ImGui::GetBackgroundDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(200, 200), IM_COL32(255, 255, 255, 255), resultText.data());
 

@@ -5,19 +5,19 @@ Player::Player(uintptr_t pointerPlayer, ProcessManagement* proc) {
 	this->paddedPlayer = proc->ReadMemory<PaddedPlayer>(pointerPlayer);
 }
 
-bool Player::setView(Vector3& viewVector, ProcessManagement* proc) {
+bool Player::setView(const Vector3& viewVector, ProcessManagement* proc) const{
 	return proc->WriteMemory<Vector3>(pointerPlayer + Offsets::player_view_offset, viewVector);
 }
 
-bool Player::setHealth(int health, ProcessManagement* proc) {
+bool Player::setHealth(int health, ProcessManagement* proc) const {
 	return proc->WriteMemory<int>(pointerPlayer + Offsets::player_health_offset, health);
 }
 
-PaddedPlayer Player::getCachedPlayer() {
+PaddedPlayer Player::getCachedPlayer() const {
 	return this->paddedPlayer;
 }
 
-Vector3 Player::getFeetPos() {
+Vector3 Player::getFeetPos() const {
 	return this->paddedPlayer.pos - Vector3(0.0f, 0.0f, 16.0f);
 }
 

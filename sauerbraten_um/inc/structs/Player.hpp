@@ -30,13 +30,13 @@ public:
 
 	Player(uintptr_t pointerPlayer, ProcessManagement* proc);
 
-	bool setView(Vector3& viewVector, ProcessManagement* proc);
+	bool setView(const Vector3& viewVector, ProcessManagement* proc) const;
 
-	bool setHealth(int health, ProcessManagement* proc);
+	bool setHealth(int health, ProcessManagement* proc) const;
 
-	PaddedPlayer getCachedPlayer();
+	PaddedPlayer getCachedPlayer() const;
 
-	Vector3 getFeetPos();
+	Vector3 getFeetPos() const;
 
 };
 

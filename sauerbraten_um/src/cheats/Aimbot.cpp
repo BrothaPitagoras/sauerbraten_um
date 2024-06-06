@@ -14,14 +14,14 @@ void Cheats::Aimbot::Aimbot(Player* localPlayer, ProcessManagement* proc) {
 		return;
 	}
 
-	auto resultText = std::string(target->getCachedPlayer().name);
+	auto resultText = std::string_view(target->getCachedPlayer().name);
 
-	ImGui::GetBackgroundDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(200, 200), IM_COL32(255, 255, 255, 255), resultText.c_str());
+	ImGui::GetBackgroundDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(200, 200), IM_COL32(255, 255, 255, 255), resultText.data());
 
 
 	Vector3 resultVector = target->getCachedPlayer().pos - localPlayer->getCachedPlayer().pos;
 
-	ImGui::GetBackgroundDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(200, 300), IM_COL32(255, 255, 255, 255), resultVector.toString().c_str());
+	ImGui::GetBackgroundDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(200, 300), IM_COL32(255, 255, 255, 255), resultVector.toString().data());
 
 
 	float yaw = -std::atan2(resultVector.x, resultVector.y) * (180.0f / M_PI);
@@ -29,7 +29,7 @@ void Cheats::Aimbot::Aimbot(Player* localPlayer, ProcessManagement* proc) {
 
 	auto view = Vector3(yaw, pitch, 0.0f);
 
-	ImGui::GetBackgroundDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(200, 350), IM_COL32(255, 255, 255, 255), view.toString().c_str());
+	ImGui::GetBackgroundDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(200, 350), IM_COL32(255, 255, 255, 255), view.toString().data());
 	
 	localPlayer->setView(view, proc);
 }
